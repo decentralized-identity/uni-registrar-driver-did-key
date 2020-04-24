@@ -32,10 +32,17 @@ exports.register = function(body) {
             "identifier" : didDocument.id,
             "state" : "finished",
             "secret" : {
-              "keys" : [ didDocument.keys ]
+              "keys" : [ ]
             }
           }
         };
+        Object.keys(didDocument.keys).map(function(key, index) {
+          var didDocumentKey = didDocument.keys[key];
+          didDocumentKey.id = key;
+          response.didState.secret.keys.push(didDocumentKey);
+        });
+        response.didState.secret.keys[0].purpose = ["authentication","assertionMethod","capabilityDelegation","capabilityInvocation"];
+        response.didState.secret.keys[1].purpose = ["keyAgreement"];
         resolve(response);
       } else {
         resolve(404);
