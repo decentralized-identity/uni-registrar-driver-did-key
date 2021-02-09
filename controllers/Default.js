@@ -13,8 +13,8 @@ module.exports.deactivate = function deactivate (req, res, next, body) {
     });
 };
 
-module.exports.register = function register (req, res, next, body) {
-  Default.register(body)
+module.exports.create = function create (req, res, next, body) {
+  Default.create(body)
     .then(function (response) {
       utils.writeJson(res, response);
     })

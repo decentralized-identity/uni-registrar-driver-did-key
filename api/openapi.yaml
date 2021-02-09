@@ -6,26 +6,24 @@ info:
     email: markus@danubetech.com
   version: 1.0.0
 servers:
-- url: https://virtserver.swaggerhub.com/universal-registrar/universal-registrar-driver/1.0.0
-  description: SwaggerHub API Auto Mocking
 - url: /1.0/
 paths:
-  /register:
+  /create:
     post:
-      summary: Registers a DID.
-      operationId: register
+      summary: Creates a DID.
+      operationId: create
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RegisterRequest'
+              $ref: '#/components/schemas/CreateRequest'
       responses:
         "200":
-          description: successfully registered!
+          description: successfully createed!
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RegisterState'
+                $ref: '#/components/schemas/CreateState'
         "400":
           description: invalid input!
         "500":
@@ -75,7 +73,7 @@ paths:
       x-swagger-router-controller: Default
 components:
   schemas:
-    RegisterRequest:
+    CreateRequest:
       type: object
       properties:
         jobId:
@@ -92,7 +90,7 @@ components:
         didDocument:
           type: object
       additionalProperties: false
-      description: Request parameters for the register operation.
+      description: Request parameters for the create operation.
     UpdateRequest:
       required:
       - identifier
@@ -129,7 +127,7 @@ components:
           type: object
       additionalProperties: false
       description: Request parameters for the deactivate operation.
-    RegisterState:
+    CreateState:
       required:
       - didState
       type: object
@@ -138,13 +136,13 @@ components:
           type: string
           example: 6d85bcd0-2ea3-4288-ab00-15afadd8a156
         didState:
-          $ref: '#/components/schemas/RegisterState_didState'
+          $ref: '#/components/schemas/CreateState_didState'
         registrarMetadata:
           type: object
         methodMetadata:
           type: object
       additionalProperties: false
-      description: The state after a register operation.
+      description: The state after a create operation.
       example:
         jobId: 6d85bcd0-2ea3-4288-ab00-15afadd8a156
         didState:
@@ -206,7 +204,7 @@ components:
           state: state
         methodMetadata: {}
         registrarMetadata: {}
-    RegisterState_didState:
+    CreateState_didState:
       type: object
       properties:
         state:

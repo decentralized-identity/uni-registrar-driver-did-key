@@ -3,25 +3,12 @@
 const didKeyDriver = require('did-method-key').driver();
 
 /**
- * Deactivates a DID.
+ * Creates a DID.
  *
- * body DeactivateRequest  (optional)
- * returns DeactivateState
+ * body CreateRequest  (optional)
+ * returns CreateState
  **/
-exports.deactivate = function(body) {
-  return new Promise(function(resolve, reject) {
-    reject("Not implemented");
-  });
-}
-
-
-/**
- * Registers a DID.
- *
- * body RegisterRequest  (optional)
- * returns RegisterState
- **/
-exports.register = function(body) {
+exports.create = function(body) {
   return new Promise(function(resolve, reject) {
     didKeyDriver.generate()
     .then(function(didDocument) {
@@ -54,7 +41,6 @@ exports.register = function(body) {
   });
 }
 
-
 /**
  * Updates a DID.
  *
@@ -67,3 +53,14 @@ exports.update = function(body) {
   });
 }
 
+/**
+ * Deactivates a DID.
+ *
+ * body DeactivateRequest  (optional)
+ * returns DeactivateState
+ **/
+exports.deactivate = function(body) {
+  return new Promise(function(resolve, reject) {
+    reject("Not implemented");
+  });
+}
