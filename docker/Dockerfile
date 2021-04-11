@@ -6,9 +6,9 @@ MAINTAINER Markus Sabadello <markus@danubetech.com>
 # build driver-did-key
 
 WORKDIR /usr/src/app
-COPY package.json ./
-RUN npm install
 COPY . .
+RUN rm -rf node_modules/
+RUN npm install
 
 # done
 
