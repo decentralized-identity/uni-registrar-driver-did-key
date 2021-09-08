@@ -65,63 +65,8 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK_URL }}
 
-  set-framework:
-    runs-on: ubuntu-latest
-    outputs:
-      framework: ${{ steps.set_framework.outputs.framework }}
-    steps:
-      - name: Set framework to output variable
-        id: set_framework
-        run: echo "::set-output name=framework::${{ env.GLOBAL_FRAMEWORK }}"
-
-  validate-pom:
-    needs: [create-tag, set-version, set-framework]
-    if: ${{ needs.set-framework.outputs.framework }} == 'maven'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Import Secrets
-        uses: hashicorp/vault-action@v2.3.0
-        with:
-          url: ${{ secrets.VAULT_ADDR }}
-          token: ${{ secrets.CI_SECRET_READER_PERIODIC_TOKEN }}
-          caCertificate: ${{ secrets.VAULTCA }}
-          secrets: |
-            ci/data/gh-workflows/maven-danubetech-nexus username | MAVEN_USERNAME ;
-            ci/data/gh-workflows/maven-danubetech-nexus password | MAVEN_PASSWORD ;
-            ci/data/gh-workflows/deployment-status slack-webhook-url | SLACK_WEBHOOK_URL
-
-      - name: Prepare multi server settings file
-        uses: danubetech/github-action-prepare-maven-settings-xml@master
-        with:
-          server_ids: danubetech-maven-releases,danubetech-maven-internal
-
-      - uses: actions/checkout@master
-        with:
-          ref: ${{ env.GLOBAL_TAG }}
-
-      - name: Validate pom.xml
-        run: |
-          echo "$SETTINGS_FILE" > ./multi-server-template.xml
-          envsubst < ./multi-server-template.xml > ./settings.xml
-          mvn validate -P ci --settings ./settings.xml
-
-      - name: Slack notification
-        uses: 8398a7/action-slack@v3
-        with:
-          status: ${{ job.status }}
-          fields: repo,commit,action,eventName,ref,workflow
-        env:
-          SLACK_WEBHOOK_URL: ${{ env.SLACK_WEBHOOK_URL }}
-        if: failure()
-
-      - name: Remove release tag
-        if: failure()
-        run: |
-          git tag -d "${{ env.RELEASE_VERSION }}"
-          git push --delete origin "${{ env.RELEASE_VERSION }}"
-
   publish-image:
-    needs: [validate-pom, set-version, create-tag]
+    needs: [ set-version, create-tag ]
     runs-on: ubuntu-latest
     env:
       RELEASE_VERSION: ${{ needs.set-version.outputs.version }}
