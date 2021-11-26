@@ -137,9 +137,9 @@ components:
           example: 6d85bcd0-2ea3-4288-ab00-15afadd8a156
         didState:
           $ref: '#/components/schemas/CreateState_didState'
-        registrarMetadata:
+        didRegistrationMetadata:
           type: object
-        methodMetadata:
+        didDocumentMetadata:
           type: object
       additionalProperties: false
       description: The state after a create operation.
@@ -157,8 +157,8 @@ components:
                 crv: Ed25519
                 x: jpIKKU2b77lNXKTNW2NGvw1GUMjU6v_l_tLJAH5uYz0
               publicKeyDIDURL: did:sov:WRfXPg8dantKVubE3HX8pw#key-1
-        methodMetadata: {}
-        registrarMetadata: {}
+        didDocumentMetadata: {}
+        didRegistrationMetadata: {}
     UpdateState:
       required:
       - didState
@@ -169,9 +169,9 @@ components:
           example: 6d85bcd0-2ea3-4288-ab00-15afadd8a156
         didState:
           $ref: '#/components/schemas/UpdateState_didState'
-        registrarMetadata:
+        didRegistrationMetadata:
           type: object
-        methodMetadata:
+        didDocumentMetadata:
           type: object
       additionalProperties: false
       description: The state after an update operation.
@@ -180,8 +180,8 @@ components:
         didState:
           state: state
           secret: {}
-        methodMetadata: {}
-        registrarMetadata: {}
+        didDocumentMetadata: {}
+        didRegistrationMetadata: {}
     DeactivateState:
       required:
       - didState
@@ -192,9 +192,9 @@ components:
           example: 6d85bcd0-2ea3-4288-ab00-15afadd8a156
         didState:
           $ref: '#/components/schemas/DeactivateState_didState'
-        registrarMetadata:
+        didRegistrationMetadata:
           type: object
-        methodMetadata:
+        didDocumentMetadata:
           type: object
       additionalProperties: false
       description: The state after a deactivate operation.
@@ -202,8 +202,8 @@ components:
         jobId: 6d85bcd0-2ea3-4288-ab00-15afadd8a156
         didState:
           state: state
-        methodMetadata: {}
-        registrarMetadata: {}
+        didDocumentMetadata: {}
+        didRegistrationMetadata: {}
     CreateState_didState:
       type: object
       properties:
