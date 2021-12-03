@@ -1,6 +1,6 @@
 'use strict';
 
-const didKeyDriver = require('did-method-key').driver();
+const didKeyDriver = require('@digitalbazaar/did-method-key').driver();
 
 /**
  * Creates a DID.
@@ -11,7 +11,9 @@ const didKeyDriver = require('did-method-key').driver();
 exports.create = function(body) {
   return new Promise(function(resolve, reject) {
     didKeyDriver.generate()
-    .then(function(didDocument) {
+    .then(function(response) {
+      const didDocument = response.didDocument;
+      const keyPairs = response.keyPairs;
       if (didDocument) {
         var response = {
           "jobId" : null,
