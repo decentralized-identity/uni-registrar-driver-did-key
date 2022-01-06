@@ -31,10 +31,11 @@ exports.create = function (body) {
                 }
             };
             const resolutionOptions = {
-                accept: 'application/did+ld+json'
+                accept: 'application/did+json'  // the did-key.js library returns different verification methods depending on media type...
             };
             didKeyDriver.generate(type, generateOptions, resolutionOptions)
                 .then(function (response) {
+                    console.log(JSON.stringify(response));
                     const didDocument = response.didDocument;
                     const keys = response.keys;
                     if (didDocument) {
