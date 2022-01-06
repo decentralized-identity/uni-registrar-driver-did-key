@@ -13,9 +13,10 @@
   "license": "Unlicense",
   "private": true,
   "dependencies": {
-    "@digitalbazaar/did-method-key": "2.0.0",
+    "@transmute/did-key.js": "0.3.0-unstable.5",
     "connect": "3.7.0",
     "js-yaml": "4.1.0",
-    "oas3-tools": "2.0.2"
+    "oas3-tools": "2.0.2",
+    "start": "^5.1.0"
   }
 }
