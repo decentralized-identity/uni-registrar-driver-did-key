@@ -18,7 +18,7 @@ exports.create = function(body) {
         var response = {
           "jobId" : null,
           "didState" : {
-            "identifier" : didDocument.id,
+            "did" : didDocument.id,
             "state" : "finished",
             "secret" : {
               "keys" : [ ]
