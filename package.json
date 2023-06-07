@@ -1,5 +1,5 @@
 {
-  "name": "uni-registrar-did-key",
+  "name": "uni-registrar-driver-did-key",
   "version": "0.2.0",
   "description": "Universal Registrar Driver",
   "main": "index.js",
