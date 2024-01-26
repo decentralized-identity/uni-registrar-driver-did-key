@@ -1,6 +1,7 @@
 'use strict';
 
 const didKeyDriver = require('@transmute/did-key.js');
+const responseUtils = require('../utils/reponseUtils.js');
 const crypto = require('crypto');
 
 const purposes = [
@@ -18,10 +19,18 @@ const purposes = [
  * returns CreateState
  **/
 exports.create = function (body) {
-    const type = body.options.keyType || 'ed25519';
+    const clientSecretMode = body.options.clientSecretMode;
+    let type = body.options.keyType || 'ed25519';
     const seed = body.secret.seed;
     return new Promise(function (resolve, reject) {
         try {
+            if (clientSecretMode === true) {
+                if (! type) type = "Ed25519";
+
+                const response = responseUtils.actionGetVerificationMethodResponse(type);
+                resolve(response);
+                return;
+            }
             const generateOptions = {
                 secureRandom: () => {
                     if (seed)
@@ -53,7 +62,7 @@ exports.create = function (body) {
                             key.publicKeyJwk = undefined;
                             key.purpose = [];
                             purposes.forEach(purpose => {
-                                if (didDocument[purpose].includes(key.id)) {
+                                if (didDocument[purpose] && didDocument[purpose].includes(key.id)) {
                                     key.purpose.push(purpose);
                                 }
                             });
